@@ -1,4 +1,11 @@
-import { selectRobotsData, selectRobotsState } from '../robots';
+import {
+  selectIsExtinguishing,
+  selectIsFetching,
+  selectIsRecycling,
+  selectIsShipping,
+  selectRobotsData,
+  selectRobotsState,
+} from '../robots';
 import { IRobot, IRobotAppState, IRobotData } from './../../models';
 
 const currentAppState = {
@@ -32,5 +39,14 @@ describe('Testing robots selectors', () => {
     ]
     const actual = selectRobotsData(currentAppState);
     expect(actual).toEqual(expected);
+  });
+});
+
+describe('Testing loading selectors', () => {
+  it('should return the correct robots loading flag', () => {
+    expect(selectIsFetching(currentAppState)).toEqual(false);
+    expect(selectIsExtinguishing(currentAppState)).toEqual(false);
+    expect(selectIsRecycling(currentAppState)).toEqual(false);
+    expect(selectIsShipping(currentAppState)).toEqual(false);
   });
 });

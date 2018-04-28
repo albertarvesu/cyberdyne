@@ -21,3 +21,41 @@ export function* getRobots(action: IAppAction) {
 export function* watchGetRobots() {
   yield takeLatest(ACTION_TYPES.GET_ROBOTS, getRobots);
 }
+
+export function* extinguishRobot(action: IAppAction) {
+  try {
+    const robot = yield call(API.extinguishRobot, action.payload);
+    yield put({
+      payload: robot,
+      type: ACTION_TYPES.EXTINGUISH_ROBOT_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      payload: error.message,
+      type: ACTION_TYPES.EXTINGUISH_ROBOT_FAILURE
+    });
+  }
+}
+
+export function* watchExtinguishRobot() {
+  yield takeLatest(ACTION_TYPES.EXTINGUISH_ROBOT, extinguishRobot);
+}
+
+export function* recycleRobots(action: IAppAction) {
+  try {
+    const robot = yield call(API.recycleRobots, action.payload);
+    yield put({
+      payload: robot,
+      type: ACTION_TYPES.RECYCLE_ROBOTS_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      payload: error.message,
+      type: ACTION_TYPES.RECYCLE_ROBOTS_FAILURE
+    });
+  }
+}
+
+export function* watchRecycleRobots() {
+  yield takeLatest(ACTION_TYPES.RECYCLE_ROBOTS, recycleRobots);
+}

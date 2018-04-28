@@ -6,16 +6,20 @@ import { IRobot } from '../../models';
 import { decorateCheckbox, isForExtinguishing, isForRecycling, QualityAssurance } from './QualityAssurance';
 
 const defaultProps = {
-  robots: [],
-  getRobots: () => {}, // tslint:disable-line:no-empty 
+  extinguishRobot: () => {}, // tslint:disable-line:no-empty
+  getRobots: () => {}, // tslint:disable-line:no-empty
   history: {},
+  robots: [],
+  isRecycling: false,
+  isExtinguishing: false,
+  recycleRobots: () => {}, // tslint:disable-line:no-empty
 }
 
 describe('Testing <QualityAssurance /> component', () => {
   it('renders without crashing', () => {
     const wrapper = shallow(<QualityAssurance {...defaultProps} />);
     expect(wrapper.type()).toEqual('div');
-  })
+  });
 });
 
 describe('Testing isForRecycling function', () => {
