@@ -11,8 +11,8 @@ describe('testing API: robots', () => {
       ],
       status: 200,
     };
-    nock(API_URL).get('/robots.json?offset=0&limit=1000').reply(200, expected);
-    const actual = await getRobots();
+    nock(API_URL).get('/robots.json').reply(200, expected);
+    const actual = await getRobots({});
     expect(actual).toEqual(expected);
   });
   it('API: getRobots with meta', async () => {

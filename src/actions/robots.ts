@@ -1,8 +1,8 @@
 import * as ACTION_TYPES from './../constants/actionTypes';
 
 export interface IListMeta {
-  offset?: number;
-  limit?: number;
+  offset?: number | null;
+  limit?: number | null;
 }
 
 export type IGetRobots = (meta?: IListMeta) => void;

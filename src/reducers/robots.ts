@@ -1,4 +1,4 @@
-import { get, without } from 'lodash';
+import { get } from 'lodash';
 
 import {
   EXTINGUISH_ROBOT,
