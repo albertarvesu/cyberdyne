@@ -1,4 +1,4 @@
-enum ERobotStatus {
+export enum ERobotStatus {
   ONFIRE = 'on fire',
   RUSTY = 'rusty',
   LOOSE_SCREWS = 'loose screws',
@@ -17,7 +17,7 @@ export interface IRobot {
   id: number;
   name: string;
   configuration: IRobotConfiguration;
-  status?: ERobotStatus[];
+  statuses: ERobotStatus[];
 }
 
 export interface IRobotData {
@@ -31,5 +31,5 @@ export interface IRobotAppState {
   isShipping: boolean;
   hasError: boolean;
   errorMessage?: string;
-  data?: IRobotData;
+  data: IRobotData;
 }

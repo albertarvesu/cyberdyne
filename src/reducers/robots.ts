@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, without } from 'lodash';
 
 import {
   EXTINGUISH_ROBOT,
@@ -19,6 +19,7 @@ import { IAppAction } from '../actions';
 import { IRobot, IRobotAppState, IRobotData } from './../models';
 
 const initialState: IRobotAppState = {
+  data: {},
   hasError: false,
   isExtinguishing: false,
   isFetching: false,
@@ -71,15 +72,20 @@ export const robots = (state = initialState, action: IAppAction): IRobotAppState
     /*
       action.payload = IRobot
     */
-    case EXTINGUISH_ROBOT_SUCCESS:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [action.payload.id]: action.payload
-        },
-        isExtinguishing: false,
+    case EXTINGUISH_ROBOT_SUCCESS: {
+      const data = get(action, 'payload.data');
+      if (data) {
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            [data.id]: data
+          },
+          isExtinguishing: false,
+        }
       }
+      return state;
+    }
 
     /*
       action.payload = [id, id, id]
@@ -88,16 +94,16 @@ export const robots = (state = initialState, action: IAppAction): IRobotAppState
     case SHIP_ROBOTS_SUCCESS:
       return {
         ...state,
-        data: get(Object.keys(state.data || {}), []).reduce(
-                (accum: IRobotAppState, current: number) => {
-                    return !action.payload.includes(current)
+        data: Object.keys(state.data).reduce(
+                (accum: IRobotAppState, current: string) => {
+                    return !get(action, 'payload.data', []).includes(parseInt(current, 10))
                       ? { ...accum, [current]: get(state, `data[${current}]`) }
                       : accum;
                   },
                 {}
               ),
-        isRecycling: action.type === RECYCLE_ROBOTS_SUCCESS,
-        isShipping: action.type === SHIP_ROBOTS_SUCCESS,
+        isRecycling: false,
+        isShipping: false,
       }
 
     case GET_ROBOTS_FAILURE:
@@ -106,7 +112,7 @@ export const robots = (state = initialState, action: IAppAction): IRobotAppState
     case SHIP_ROBOTS_FAILURE:
       return {
         ...state,
-        errorMessage: action.payload,
+        errorMessage: get(action, 'payload.message'),
         hasError: true,
         isExtinguishing: false,
         isFetching: false,
