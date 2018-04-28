@@ -2,7 +2,7 @@ import { Button, Divider, Icon, Popconfirm, Table } from 'antd';
 import { includes } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { extinguishRobot, getRobots, IExtinguishRobot, IGetRobots, IRecycleRobots, recycleRobots } from '../../actions/robots';
 import { ERobotStatus, IAppState, IRobot } from '../../models';
@@ -197,6 +197,10 @@ export class QualityAssurance extends React.Component<IQAProps, IQAState> {
               Recycle {hasSelected && `${selectedRowKeys.length} robot(s)`}
             </Button>
           </Popconfirm>
+          <h2>Quality Assurance</h2>
+          <Link to="/shipping">
+            Proceed to Shipping &gt;&gt;
+          </Link>
         </div>
         <Table rowSelection={rowSelection} dataSource={dataSource} columns={this.columns} />
       </div>
