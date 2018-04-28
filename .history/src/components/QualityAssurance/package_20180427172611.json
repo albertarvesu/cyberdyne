@@ -1,6 +1,0 @@
-{
-  "name": "QualityAssurance",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./QualityAssurance.tsx"
-}
