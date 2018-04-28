@@ -76,5 +76,5 @@ export function* shipRobots(action: IAppAction) {
 }
 
 export function* watchShipRobots() {
-  yield takeLatest(ACTION_TYPES.RECYCLE_ROBOTS, shipRobots);
+  yield takeLatest(ACTION_TYPES.SHIP_ROBOTS, shipRobots);
 }

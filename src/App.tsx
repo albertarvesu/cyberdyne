@@ -19,7 +19,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
           <Layout className="layout">
             <Header>
               <h2 className="company-name">The Cyberdyne Systems</h2>
@@ -31,7 +31,7 @@ class App extends React.Component {
               <Redirect to="/" push={true} />
             </Switch>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
+          <Footer className="center">
             The Cyberdyne Systems © 2018
           </Footer>
           </Layout>

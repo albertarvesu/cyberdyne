@@ -1,4 +1,4 @@
-import { Button, Divider, Icon, Popconfirm, Table } from 'antd';
+import { Button, Divider, Popconfirm, Table } from 'antd';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -43,32 +43,36 @@ export class QualityAssurance extends React.Component<IQAProps, IQAState> {
 
     this.columns = [
       {
+        dataIndex: 'id',
+        title: 'ID',
+      },
+      {
         dataIndex: 'name',
         title: 'Robot Name',
       },
-      {
-        dataIndex: 'configuration.hasSentience',
-        title: 'Sentience',
-        render: (value: boolean) => value && <Icon type="check" />,
-      },
-      {
-        dataIndex: 'configuration.hasWheels',
-        title: 'Wheels',
-        render: (value: boolean) => value && <Icon type="check" />,
-      },
-      {
-        dataIndex: 'configuration.hasTracks',
-        title: 'Tracks',
-        render: (value: boolean) => value && <Icon type="check" />,
-      },
-      {
-        dataIndex: 'configuration.numberOfRotors',
-        title: 'Rotors',
-      },
-      {
-        dataIndex: 'configuration.colour',
-        title: 'Colour',
-      },
+      // {
+      //   dataIndex: 'configuration.hasSentience',
+      //   title: 'Sentience',
+      //   render: (value: boolean) => value && <Icon type="check" />,
+      // },
+      // {
+      //   dataIndex: 'configuration.hasWheels',
+      //   title: 'Wheels',
+      //   render: (value: boolean) => value && <Icon type="check" />,
+      // },
+      // {
+      //   dataIndex: 'configuration.hasTracks',
+      //   title: 'Tracks',
+      //   render: (value: boolean) => value && <Icon type="check" />,
+      // },
+      // {
+      //   dataIndex: 'configuration.numberOfRotors',
+      //   title: 'Rotors',
+      // },
+      // {
+      //   dataIndex: 'configuration.colour',
+      //   title: 'Colour',
+      // },
       {
         dataIndex: 'statuses',
         title: 'Statuses',

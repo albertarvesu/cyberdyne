@@ -6,7 +6,9 @@ export const selectRobotsState = (state: IAppState): IRobotAppState => get(state
 
 export const selectRobotsData = (state: IAppState): IRobot[] => {
   const robots = get(selectRobotsState(state), 'data', []);
-  return Object.keys(robots).map(id => robots[id]);
+  return Object.keys(robots).map(id => robots[id])
+    .concat()
+    .sort((a, b) => a.id - b.id);
 };
 
 export const selectQualityRobots = (state: IAppState): IRobot[] => {
