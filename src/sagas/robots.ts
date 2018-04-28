@@ -43,9 +43,9 @@ export function* watchExtinguishRobot() {
 
 export function* recycleRobots(action: IAppAction) {
   try {
-    const robot = yield call(API.recycleRobots, action.payload);
+    const robots = yield call(API.recycleRobots, action.payload);
     yield put({
-      payload: robot,
+      payload: robots,
       type: ACTION_TYPES.RECYCLE_ROBOTS_SUCCESS,
     });
   } catch (error) {
@@ -58,4 +58,23 @@ export function* recycleRobots(action: IAppAction) {
 
 export function* watchRecycleRobots() {
   yield takeLatest(ACTION_TYPES.RECYCLE_ROBOTS, recycleRobots);
+}
+
+export function* shipRobots(action: IAppAction) {
+  try {
+    const robots = yield call(API.shipRobots, action.payload);
+    yield put({
+      payload: robots,
+      type: ACTION_TYPES.SHIP_ROBOTS_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      payload: error.message,
+      type: ACTION_TYPES.SHIP_ROBOTS_FAILURE
+    });
+  }
+}
+
+export function* watchShipRobots() {
+  yield takeLatest(ACTION_TYPES.RECYCLE_ROBOTS, shipRobots);
 }

@@ -43,4 +43,17 @@ export const recycleRobots = (robots: IRobot[]) => {
   );
 };
 
+export const shipRobots = (robots: IRobot[]) => {
+  const url = `${API_URL}/shipments/create`;
+  return ajax(
+    url,
+    {
+      method: 'PUT',
+      body: JSON.stringify({
+        robotIds: robots.map(robot => robot.id)
+      }),
+    },
+  );
+};
+
 export default getRobots;

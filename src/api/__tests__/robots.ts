@@ -1,7 +1,7 @@
 import * as nock from 'nock';
 import { IRobot } from '../../models';
 import { API_URL } from './../../constants/api';
-import { extinguishRobot, getRobots, recycleRobots } from './../robots';
+import { extinguishRobot, getRobots, recycleRobots, shipRobots } from './../robots';
 
 describe('testing API: getRobots', () => {
 
@@ -101,6 +101,45 @@ describe('testing API: recycleRobots', () => {
     };
     nock(API_URL).post('/robots/recycle.json').reply(200, expected);
     const actual = await recycleRobots(robots);
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe('testing API: shipRobots', () => {
+
+  it('API: shipRobots with robots param', async () => {
+    const robots = [
+      {
+        id: 1,
+        name: 'Robot1',
+        configuration: {
+          hasSentience: true,
+          hasWheels: true,
+          hasTracks: true,
+          numberOfRotors: 8,
+          colour: 'red'
+        },
+        statuses: ['on fire']
+      } as IRobot,
+      {
+        id: 2,
+        name: 'Robot2',
+        configuration: {
+          hasSentience: true,
+          hasWheels: true,
+          hasTracks: true,
+          numberOfRotors: 8,
+          colour: 'red'
+        },
+        statuses: ['on fire']
+      } as IRobot
+    ];
+    const expected = {
+      data: [1, 2],
+      status: 200,
+    };
+    nock(API_URL).put('/shipments/create').reply(200, expected);
+    const actual = await shipRobots(robots);
     expect(actual).toEqual(expected);
   });
 });

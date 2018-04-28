@@ -1,6 +1,6 @@
 import { IRobot } from '../../models';
 import * as ACTION_TYPES from './../../constants/actionTypes';
-import { extinguishRobot, getRobots, recycleRobots } from './../robots';
+import { extinguishRobot, getRobots, recycleRobots, shipRobots } from './../robots';
 
 describe('Testing robots actions: getRobots', () => {
   it('should dispatch GET_ROBOTS with correct params', () => {
@@ -68,6 +68,40 @@ describe('Testing robots actions: recycleRobots', () => {
     const expected = { type: ACTION_TYPES.RECYCLE_ROBOTS, payload: robots };
     const actual = recycleRobots(robots);
     expect(actual).toEqual(expected);
+  });
+});
 
+describe('Testing robots actions: shipRobots', () => {
+  it('should dispatch SHIP_ROBOTS with correct params', () => {
+    const robots = [
+      {
+        id: 1,
+        name: 'Robot1',
+        configuration: {
+          hasSentience: true,
+          hasWheels: true,
+          hasTracks: true,
+          numberOfRotors: 8,
+          colour: 'red'
+        },
+        statuses: ['on fire']
+      } as IRobot,
+      {
+        id: 2,
+        name: 'Robot2',
+        configuration: {
+          hasSentience: true,
+          hasWheels: true,
+          hasTracks: true,
+          numberOfRotors: 8,
+          colour: 'red'
+        },
+        statuses: ['on fire']
+      } as IRobot
+    ];
+
+    const expected = { type: ACTION_TYPES.SHIP_ROBOTS, payload: robots };
+    const actual = shipRobots(robots);
+    expect(actual).toEqual(expected);
   });
 });

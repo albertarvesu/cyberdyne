@@ -27,5 +27,12 @@ export const recycleRobots = (robots: IRobot[]) => ({
   type: ACTION_TYPES.RECYCLE_ROBOTS,
 });
 
+export type IShipRobots = (robots: IRobot[]) => void;
+
+export const shipRobots = (robots: IRobot[]) => ({
+  payload: robots,
+  type: ACTION_TYPES.SHIP_ROBOTS,
+});
+
 
 

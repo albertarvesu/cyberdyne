@@ -1,12 +1,13 @@
 import { Button, Divider, Icon, Popconfirm, Table } from 'antd';
-import { includes } from 'lodash';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { extinguishRobot, getRobots, IExtinguishRobot, IGetRobots, IRecycleRobots, recycleRobots } from '../../actions/robots';
-import { ERobotStatus, IAppState, IRobot } from '../../models';
+import { IAppState, IRobot } from '../../models';
 import { selectIsExtinguishing, selectIsRecycling, selectRobotsData } from './../../selectors/robots';
+import { decorateCheckbox, isForExtinguishing } from './../../utils/robots';
 
 interface IQAProps {
   isExtinguishing: boolean;
@@ -23,46 +24,6 @@ interface IQAState {
   selectedRows: IRobot[];
 }
 
-export const isForRecycling = (robot: IRobot): boolean => {
-  const config = robot.configuration;
-
-  // Has fewer than 3 or greater than 8 rotors
-  const hasInCorrectNumOfRotors = config.numberOfRotors < 3 || config.numberOfRotors > 8;
-
-  // Has any number of rotors and blue in colour
-  const hasRotorsAndBlue = config.numberOfRotors > 0 && config.colour === 'blue';
-
-  // Has both wheels and tracks
-  const hasBothWheelsAndTracks = config.hasWheels && config.hasTracks;
-
-  // Has wheels and is rusty
-  const hasWheelsAndRusty = config.hasWheels && includes(robot.statuses, ERobotStatus.RUSTY);
-
-  // Is sentient and has screws loose
-  const hasSentienceAndLooseScrews = config.hasSentience && includes(robot.statuses, ERobotStatus.LOOSE_SCREWS);
-
-  // Is on fire
-  const isOnFire = includes(robot.statuses, ERobotStatus.ONFIRE);
-
-  return [
-    hasInCorrectNumOfRotors,
-    hasRotorsAndBlue,
-    hasBothWheelsAndTracks,
-    hasWheelsAndRusty,
-    hasSentienceAndLooseScrews,
-    isOnFire
-  ].some(check => check);
-};
-
-export const isForExtinguishing = (robot: IRobot): boolean =>
-  // Sentient or on fire robots should be extinguish
-  robot.configuration.hasSentience && includes(robot.statuses, ERobotStatus.ONFIRE);
-
-export const decorateCheckbox = (robot: IRobot): object => ({
-  // Robots that is ready for the next stage should have their checkbox disabled
-  disabled: !isForRecycling(robot) || isForExtinguishing(robot),
-});
-
 export class QualityAssurance extends React.Component<IQAProps, IQAState> {
 
   columns: Array<{ dataIndex: string; title: string; render?: undefined; } | { title: string; dataIndex: string; render: (configuration: any, robot: any) => false | JSX.Element; }>;
@@ -73,6 +34,7 @@ export class QualityAssurance extends React.Component<IQAProps, IQAState> {
     this.onChange = this.onChange.bind(this);
     this.onExtinguish = this.onExtinguish.bind(this);
     this.onRecycle = this.onRecycle.bind(this);
+    this.onFinished = this.onFinished.bind(this);
 
     this.state = {
       selectedRowKeys: [],
@@ -151,7 +113,7 @@ export class QualityAssurance extends React.Component<IQAProps, IQAState> {
   }
 
   componentDidMount() {
-    this.props.getRobots();
+    this.props.getRobots({ offset: 0, limit: 1000 });
   }
 
   onChange(selectedRowKeys: number[], selectedRows: IRobot[]) {
@@ -164,6 +126,10 @@ export class QualityAssurance extends React.Component<IQAProps, IQAState> {
 
   onRecycle() {
     this.props.recycleRobots(this.state.selectedRows);
+  }
+
+  onFinished() {
+    this.props.history.push('/shipping');
   }
 
   render () {
@@ -197,10 +163,10 @@ export class QualityAssurance extends React.Component<IQAProps, IQAState> {
               Recycle {hasSelected && `${selectedRowKeys.length} robot(s)`}
             </Button>
           </Popconfirm>
-          <h2>Quality Assurance</h2>
-          <Link to="/shipping">
-            Proceed to Shipping &gt;&gt;
-          </Link>
+          <h3>Quality Assurance</h3>
+          <Popconfirm okText="Yes" title="Are you sure you have completed the QA process?" onConfirm={this.onFinished}>
+            <Button>Finished</Button>
+          </Popconfirm>
         </div>
         <Table rowSelection={rowSelection} dataSource={dataSource} columns={this.columns} />
       </div>
