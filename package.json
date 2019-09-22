@@ -12,7 +12,7 @@
     "nock": "^9.2.5",
     "node-fetch": "^2.1.2",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react-dom": "^16.3.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.15.1",
