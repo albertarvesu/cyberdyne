@@ -8,7 +8,7 @@
     "antd": "^3.4.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "nock": "^9.2.5",
     "node-fetch": "^2.1.2",
     "react": "^16.3.2",
