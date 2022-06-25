@@ -10,7 +10,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "lodash": "^4.17.10",
     "nock": "^9.2.5",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.6.7",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
